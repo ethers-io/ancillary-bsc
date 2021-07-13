@@ -1,0 +1,8 @@
+node_modules/
+obsolete/
+.DS_Store
+**/*.swp
+*~
+
+# Weird intermediate files tsc sometimes generates for references
+**/src.ts/*.js

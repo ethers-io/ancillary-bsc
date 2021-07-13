@@ -1,0 +1,44 @@
+{
+  "author": "Richard Moore <me@ricmoo.com>",
+  "dependencies": {
+    "ethers": "^5.4.1"
+  },
+  "description": "An ethers-compatible provider for BSC using the bscscan.com third-party service.",
+  "devDependencies": {
+    "@types/mocha": "^8.2.3",
+    "@types/node": "^15.6.1",
+    "mocha": "^9.0.2",
+    "reticulate": "^0.0.4",
+    "rollup": "^2.52.7",
+    "rollup-plugin-terser": "^7.0.2",
+    "typescript": "^4.3.5"
+  },
+  "jsnext:main": "./lib.esnext/index.js",
+  "keywords": [
+    "BSC",
+    "ethers"
+  ],
+  "license": "MIT",
+  "main": "./lib/index.js",
+  "module": "./lib.esm/index.js",
+  "name": "@ethers-ancillary/bsc",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ethers-io/ancillary-bsc.git"
+  },
+  "scripts": {
+    "auto-build": "npm run build -- -w",
+    "build": "tsc --build ./tsconfig.json",
+    "build-all": "npm run dump-version && npm run build-cjs && npm run build-esnext && npm run build-esm && npm run dist",
+    "build-cjs": "tsc -p tsconfig.json --outDir lib -t es3 -m commonjs",
+    "build-esnext": "tsc -p tsconfig.json --outDir lib.esnext -t es2015 -m commonjs",
+    "build-esm": "tsc -p tsconfig.json --outDir lib.esm -t es2015 -m es2015",
+    "clean": "rm -rf package-lock.json lib/ lib.esm/ lib.esnext/",
+    "dist": "rollup -c rollup.config.js",
+    "dump-version": "node -p 'const p = JSON.parse(fs.readFileSync(\"package.json\")); (`export const version = \"${ p.name }@${ p.version}\";`)'  > ./src.ts/_version.ts",
+    "test": "npx mocha lib/*.tests.js"
+  },
+  "sideEffects": false,
+  "types": "./lib/index.d.ts",
+  "version": "0.0.1"
+}
