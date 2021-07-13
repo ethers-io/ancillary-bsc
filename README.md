@@ -1,6 +1,8 @@
 Ancillary Package: Binance SmartChain (BSC)
 ===========================================
 
+[![npm version](https://badge.fury.io/js/%40ethers-ancillary%2Fbsc.svg)](https://www.npmjs.com/package/@ethers-ancillary/bsc)
+
 **Experimental:** This packages is still in the early stages
 of the ancillary package template and the library has not
 been thoroughly tested.
