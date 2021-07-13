@@ -22,7 +22,7 @@
     "pretty": false,
     "sourceMap": true,
     "strict": true,
-    "target": "es2015"
+    "target": "es3"
   },
   "include": [
     "./thirdparty.d.ts",
