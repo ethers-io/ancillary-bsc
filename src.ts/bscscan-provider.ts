@@ -28,9 +28,9 @@ export class BscscanProvider extends ethers.providers.EtherscanProvider {
     getBaseUrl(): string {
         switch (this.network ? this.network.name: "invalid") {
             case "bsc-mainnet":
-                return "http:/\/api.bscscan.com";
+                return "https:/\/api.bscscan.com";
             case "bsc-testnet":
-                return "http:/\/api-testnet.bscscan.com";
+                return "https:/\/api-testnet.bscscan.com";
         }
 
         return logger.throwArgumentError("unsupported network", "network", this.network);
