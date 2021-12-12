@@ -1,10 +1,10 @@
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('ethers'), require('@ethersproject/logger'), require('@ethersproject/providers'), require('@ethersproject/properties')) :
     typeof define === 'function' && define.amd ? define(['exports', 'ethers', '@ethersproject/logger', '@ethersproject/providers', '@ethersproject/properties'], factory) :
-    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global._ethers_bsc = {}, global.ethers, global.logger$4, global.providers));
-}(this, (function (exports, ethers, logger$4, providers) { 'use strict';
+    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global._ethers_bsc = {}, global.ethers, global.logger$4, global.providers, global.properties));
+}(this, (function (exports, ethers, logger$4, providers, properties) { 'use strict';
 
-    const version = "@ethers-ancillary/bsc@0.0.1";
+    const version = "@ethers-ancillary/bsc@0.0.2";
 
     const logger$3 = new ethers.ethers.utils.Logger(version);
     const networks = [
@@ -139,6 +139,18 @@
     }
 
     const logger = new logger$4.Logger(version);
+    class BscMoralisWebSocketProvider extends providers.WebSocketProvider {
+        constructor(network, apiKey) {
+            const provider = new BscMoralisProvider(network, apiKey);
+            const connection = provider.connection;
+            const url = `${connection.url.replace(/^http/i, "ws")}/ws`;
+            super(url, network);
+            properties.defineReadOnly(this, "apiKey", provider.apiKey);
+        }
+        isCommunityResource() {
+            return false;
+        }
+    }
     class BscMoralisProvider extends providers.UrlJsonRpcProvider {
         constructor(network, apiKey) {
             const standardNetwork = getNetwork(!network ? "bsc-mainnet" : network);
@@ -220,6 +232,7 @@
     }
 
     exports.BscMoralisProvider = BscMoralisProvider;
+    exports.BscMoralisWebSocketProvider = BscMoralisWebSocketProvider;
     exports.BscPocketProvider = BscPocketProvider;
     exports.BscscanProvider = BscscanProvider;
     exports.getDefaultProvider = getDefaultProvider;

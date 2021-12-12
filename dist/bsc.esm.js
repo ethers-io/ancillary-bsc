@@ -1,9 +1,9 @@
 import { ethers } from 'ethers';
 import { Logger } from '@ethersproject/logger';
-import { PocketProvider, UrlJsonRpcProvider } from '@ethersproject/providers';
-import '@ethersproject/properties';
+import { PocketProvider, WebSocketProvider, UrlJsonRpcProvider } from '@ethersproject/providers';
+import { defineReadOnly } from '@ethersproject/properties';
 
-const version = "@ethers-ancillary/bsc@0.0.1";
+const version = "@ethers-ancillary/bsc@0.0.2";
 
 const logger$3 = new ethers.utils.Logger(version);
 const networks = [
@@ -138,6 +138,18 @@ class BscPocketProvider extends PocketProvider {
 }
 
 const logger = new Logger(version);
+class BscMoralisWebSocketProvider extends WebSocketProvider {
+    constructor(network, apiKey) {
+        const provider = new BscMoralisProvider(network, apiKey);
+        const connection = provider.connection;
+        const url = `${connection.url.replace(/^http/i, "ws")}/ws`;
+        super(url, network);
+        defineReadOnly(this, "apiKey", provider.apiKey);
+    }
+    isCommunityResource() {
+        return false;
+    }
+}
 class BscMoralisProvider extends UrlJsonRpcProvider {
     constructor(network, apiKey) {
         const standardNetwork = getNetwork(!network ? "bsc-mainnet" : network);
@@ -218,4 +230,4 @@ function getDefaultProvider(network, config) {
     return new ethers.providers.FallbackProvider(providers, Math.min(providers.length, 2));
 }
 
-export { BscMoralisProvider, BscPocketProvider, BscscanProvider, getDefaultProvider, getNetwork };
+export { BscMoralisProvider, BscMoralisWebSocketProvider, BscPocketProvider, BscscanProvider, getDefaultProvider, getNetwork };
