@@ -21,10 +21,10 @@ Installing and Importing
 
 ```javascript
 // JavaScript
-const { BscscanProvider } = require("@ethers-ancillary/bsc");
+const { BscscanProvider, BscMoralisProvider, BscPocketProvider } = require("@ethers-ancillary/bsc");
 
 // TypeScript
-import { BscscanProvider } from "@ethers-ancillary/bsc";
+import { BscscanProvider, BscMoralisProvider, BscPocketProvider } from "@ethers-ancillary/bsc";
 ```
 
 **Browser**
@@ -35,6 +35,8 @@ core library (i.e. ethers.esm.js) and import using:
 ```html
 <script type="module">
   import { BscscanProvider } from "./ethers-bscscan-provider.esm.js";
+  import { BscMoralisProvider } from "./ethers-bscmoralis-provider.esm.js";
+  import { BscPocketProvider  } from "./ethers-bscpocket-provider.esm.js";
 </script>
 ```
 
@@ -42,13 +44,18 @@ core library (i.e. ethers.esm.js) and import using:
 Application Programming Interface (API)
 ---------------------------------------
 
-**getDefaultProvider(networkish?)**
+**getDefaultProvider(networkish?, options?)**
 
 Create a new default provider connected to *networkish*, which may
 be a chain name (i.e. `"bsc-mainnet"` or `"bsc-testnet`") or chain ID.
 
+The `options` is an object, with the following properties:
+`bscscan`	Bscscan API Token	
+`bscpocket`	Pocket Network Application ID or { applicationId, applicationSecretKey }	 
+`bscmoralis` Moralis API Token or { apiKey, region }
+
 This will create a FallbackProvider, backed by all popular Third-Party
-BSC services (currently only [Bsccsan](https://bscscan.com)).
+BSC services ([Bsccsan](https://bscscan.com), [Pocket](https://pokt.network/), [Moralis](https://moralis.io/speedy-nodes/)).
 
 
 **BscscanProvider**
@@ -60,6 +67,9 @@ the BSC (Binance Smart Chain) network.
 
 See [EtherscanProvider](https://docs.ethers.io/v5/api/providers/api-providers/#EtherscanProvider).
 
+**BscPocketProvider**
+
+**BscMoralisProvider**
 
 License
 -------
